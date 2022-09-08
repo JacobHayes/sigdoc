@@ -1,0 +1,69 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+target-version = ['py39']
+
+
+[tool.coverage.report]
+fail_under = 100
+skip_covered = true
+
+[tool.coverage.run]
+branch = true
+source = ["sigdoc"]
+
+
+[tool.isort]
+profile = "black"
+
+
+[tool.mypy]
+files = "src/,tests/"
+show_error_codes = true
+strict = true
+
+
+[tool.poetry]
+authors = ["Jacob Hayes <jacob.r.hayes@gmail.com>"]
+description = "Inline documentation of parameters, returns, and raises"
+homepage = "https://github.com/JacobHayes/sigdoc"
+include = ["src/sigdoc/py.typed"]
+license = "MIT"
+name = "sigdoc"
+readme = "README.md"
+repository = "https://github.com/JacobHayes/sigdoc"
+version = "0.0.1"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+
+[tool.poetry.group.dev.dependencies]
+black = "*"
+blacken-docs = "*"
+coverage = { version = "*", extras = ["toml"] }  # pyproject.toml support
+flake8 = "*"
+isort = "*"
+mypy = "*"
+pre-commit = "*"
+pylint = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-sugar = "*"
+pyupgrade = "*"
+
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.pylint.message_control]
+docstring-min-length=10
+
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-report=term-missing --doctest-modules --no-cov-on-fail"
+filterwarnings = ["error"]
+testpaths = ["src/", "tests/"]
+xfail_strict=true
