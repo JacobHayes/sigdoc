@@ -299,7 +299,7 @@ if sys.version_info < (3, 10):  # pragma: no cover
     # - modules using `from __future__ import annotations`
     # - hard coded string annotations (such as future refs) like `x: "str"`
     def _signature(fn: Callable[..., Any]) -> inspect.Signature:
-        sig = inspect.signature(fn, eval_str=True)
+        sig = inspect.signature(fn)
         type_hints = get_type_hints(fn, include_extras=True)
         return sig.replace(
             parameters=[
