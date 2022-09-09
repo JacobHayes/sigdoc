@@ -43,7 +43,7 @@ repository = "https://github.com/JacobHayes/sigdoc"
 version = "0.0.1"
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+python = "^3.9"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
