@@ -8,6 +8,11 @@ target-version = ['py39']
 
 
 [tool.coverage.report]
+exclude_lines = [
+    "@overload",
+    "pragma: no cover",
+    "raise NotImplementedError()",
+]
 fail_under = 100
 skip_covered = true
 
@@ -60,6 +65,12 @@ max-line-length = "88"
 
 [tool.pylint.message_control]
 docstring-min-length=10
+disable = """
+    invalid-name,
+    line-too-long,
+    no-else-raise,
+    too-few-public-methods,
+"""
 
 
 [tool.pytest.ini_options]
