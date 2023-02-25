@@ -216,6 +216,7 @@ def test_return() -> None:
     @document
     def fn() -> Annotated[int, R("ret")]:
         """Docstring"""
+        return 5
 
     assert fn.__doc__ == inspect.cleandoc(
         """Docstring
