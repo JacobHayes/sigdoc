@@ -349,7 +349,7 @@ if sys.version_info < (3, 10):  # pragma: no cover
             return_annotation=type_hints.get("return", sig.return_annotation),
         )
 
-else:
+else:  # pragma: no cover
 
     def _signature(fn: Callable[..., Any]) -> inspect.Signature:
         return inspect.signature(fn, eval_str=True)
