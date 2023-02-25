@@ -295,12 +295,52 @@ def _stringize_type_hint(type_hint: Any) -> str:
 
 if sys.version_info < (3, 10):  # pragma: no cover
 
+    def _fix_implicit_optional_hint(param: inspect.Parameter, hint: Any) -> Any:
+        """Correct implicitly added `Optional`s around `Annotated`.
+
+        When a parameter has a `None` default value and an `Annotated` type hint,
+        `get_type_hints` implicitly wrap an addition `Optional`.
+
+        For example:
+            >>> def x(y: Annotated[Optional[int], ...] = None) -> None: pass
+            ...
+            >>> get_type_hints(x, include_extras=True)["y"]
+            typing.Optional[typing.Annotated[typing.Optional[int], Ellipsis]]
+
+        See:
+        - https://bugs.python.org/issue46195
+        - https://github.com/JacobHayes/sigdoc/issues/4
+        """
+        origin, args = get_origin(hint), get_args(hint)
+        if (
+            param.default is None  # No default is `inspect._empty`
+            and origin is Union  # Optional[int] -> Union[int, None]
+            and {get_origin(a) for a in args} == {Annotated, None}
+        ):
+            annotated = [a for a in args if a is not None][0]
+            inner_hint, *annotations = get_args(annotated)
+            # Rewrap the inner hint with `Optional` (matching py 3.9 behavior). If it is
+            # already `Optional`, this will be a no-op.
+            #
+            # `Annotated[Optional[inner_hint], *annotations]` is a syntax error, but
+            # normal `.__class_getitem__` indexing converts the args to a tuple, so we
+            # can imitate that.
+            return Annotated[(Optional[inner_hint], *annotations)]
+        return hint
+
     # `inspect.signature` on python <3.10 will return string annotations for cases like:
     # - modules using `from __future__ import annotations`
     # - hard coded string annotations (such as future refs) like `x: "str"`
     def _signature(fn: Callable[..., Any]) -> inspect.Signature:
         sig = inspect.signature(fn)
-        type_hints = get_type_hints(fn, include_extras=True)
+        type_hints = {
+            name: (
+                hint
+                if name == "return"
+                else _fix_implicit_optional_hint(sig.parameters[name], hint)
+            )
+            for name, hint in get_type_hints(fn, include_extras=True).items()
+        }
         return sig.replace(
             parameters=[
                 p.replace(annotation=type_hints.get(p.name, p.annotation))
