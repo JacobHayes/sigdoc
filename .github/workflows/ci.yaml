@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Get pip cache dir
@@ -28,7 +28,7 @@ jobs:
       run: |
         echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
     - name: pip cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.pip-cache.outputs.dir }}
         key: pip-v0-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}
@@ -46,7 +46,7 @@ jobs:
     - name: pytest
       run: |
         poetry run pytest --cov-report="xml:coverage-${{ matrix.os }}-${{ matrix.python-version }}.xml"
-    - uses: codecov/codecov-action@v3.1.4
+    - uses: codecov/codecov-action@v4.4.0
       with:
         env_vars: OS,PYTHON_VERSION
         fail_ci_if_error: true
