@@ -27,6 +27,7 @@ Examples
     float
         the result, rounded to 2 digits
 '''
+
 import dataclasses
 import importlib.metadata
 import inspect
@@ -158,13 +159,11 @@ def register_style_handler(
 
 
 @overload
-def document(fn: FUNC) -> FUNC:
-    ...
+def document(fn: FUNC) -> FUNC: ...
 
 
 @overload
-def document(*, style: str = ...) -> Callable[[FUNC], FUNC]:
-    ...
+def document(*, style: str = ...) -> Callable[[FUNC], FUNC]: ...
 
 
 def document(
