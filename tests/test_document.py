@@ -12,8 +12,7 @@ def test_basic() -> None:
         """Docstring"""
         return a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -24,8 +23,7 @@ def test_basic() -> None:
         -------
         str
             blah
-        """
-    )
+        """)
 
 
 def test_empty() -> None:
@@ -50,15 +48,13 @@ def test_param() -> None:
         """Docstring"""
         assert a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
         a : str
             blah
-        """
-    )
+        """)
 
 
 def test_param_default() -> None:
@@ -67,8 +63,7 @@ def test_param_default() -> None:
         """Docstring"""
         assert a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -78,8 +73,7 @@ def test_param_default() -> None:
         Returns
         -------
         None
-        """
-    )
+        """)
 
 
 def test_param_default_override() -> None:
@@ -90,8 +84,7 @@ def test_param_default_override() -> None:
         """Docstring"""
         assert a, b
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -101,8 +94,7 @@ def test_param_default_override() -> None:
         Returns
         -------
         None
-        """
-    )
+        """)
 
 
 def test_param_dup_hints() -> None:
@@ -121,20 +113,17 @@ def test_param_multiline() -> None:
     def fn(
         a: Annotated[
             str,
-            P(
-                """some long
+            P("""some long
                 multiline
 
                 description
-                """
-            ),
-        ]
+                """),
+        ],
     ) -> None:
         """Docstring"""
         assert a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -147,8 +136,7 @@ def test_param_multiline() -> None:
         Returns
         -------
         None
-        """
-    )
+        """)
 
 
 def test_param_type_hint_missing() -> None:
@@ -157,8 +145,7 @@ def test_param_type_hint_missing() -> None:
         """Docstring"""
         assert a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -167,8 +154,7 @@ def test_param_type_hint_missing() -> None:
         Returns
         -------
         None
-        """
-    )
+        """)
 
 
 def test_param_type_hint_override() -> None:
@@ -177,8 +163,7 @@ def test_param_type_hint_override() -> None:
         """Docstring"""
         assert a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -187,8 +172,7 @@ def test_param_type_hint_override() -> None:
         Returns
         -------
         None
-        """
-    )
+        """)
 
 
 def test_param_vargs_kwargs() -> None:
@@ -197,8 +181,7 @@ def test_param_vargs_kwargs() -> None:
         """Docstring"""
         assert args, kwargs
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -208,8 +191,7 @@ def test_param_vargs_kwargs() -> None:
         Returns
         -------
         None
-        """
-    )
+        """)
 
 
 def test_return() -> None:
@@ -218,15 +200,13 @@ def test_return() -> None:
         """Docstring"""
         return 5
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         int
             ret
-        """
-    )
+        """)
 
 
 def test_return_tuple() -> None:
@@ -235,14 +215,12 @@ def test_return_tuple() -> None:
         """Docstring"""
         return "a", "b"
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         tuple[str, ...]
-        """
-    )
+        """)
 
 
 def test_return_tuple_doc() -> None:
@@ -251,15 +229,13 @@ def test_return_tuple_doc() -> None:
         """Docstring"""
         return "a", "b"
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         tuple[str, ...]
             doc
-        """
-    )
+        """)
 
 
 def test_return_tuple_empty() -> None:
@@ -268,14 +244,12 @@ def test_return_tuple_empty() -> None:
         """Docstring"""
         return "a", "b"
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         tuple
-        """
-    )
+        """)
 
 
 def test_return_multiple() -> None:
@@ -284,15 +258,13 @@ def test_return_multiple() -> None:
         """Docstring"""
         return "a", 1
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         str
         int
-        """
-    )
+        """)
 
 
 def test_return_multiple_doc() -> None:
@@ -301,16 +273,14 @@ def test_return_multiple_doc() -> None:
         """Docstring"""
         return "a", 1
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         str
         int
             doc
-        """
-    )
+        """)
 
 
 def test_return_multiple_root_doc() -> None:
@@ -332,14 +302,12 @@ def test_return_none() -> None:
     def fn() -> None:
         """Docstring"""
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         None
-        """
-    )
+        """)
 
 
 def test_return_type_hint_override() -> None:
@@ -348,14 +316,12 @@ def test_return_type_hint_override() -> None:
         """Docstring"""
         return 5
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Returns
         -------
         some_type
-        """
-    )
+        """)
 
 
 def test_string_annotations() -> None:
@@ -364,8 +330,7 @@ def test_string_annotations() -> None:
         """Docstring"""
         return a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """
+    assert fn.__doc__ == inspect.cleandoc("""
         Docstring
 
         Parameters
@@ -377,8 +342,7 @@ def test_string_annotations() -> None:
         -------
         str
             blah
-        """
-    )
+        """)
 
 
 def test_style() -> None:
@@ -387,8 +351,7 @@ def test_style() -> None:
         """Docstring"""
         return a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -399,8 +362,7 @@ def test_style() -> None:
         -------
         str
             blah
-        """
-    )
+        """)
 
 
 def test_style_dup() -> None:
@@ -426,8 +388,7 @@ def test_tricky_annotation() -> None:
         """Docstring"""
         assert a
 
-    assert fn.__doc__ == inspect.cleandoc(
-        """Docstring
+    assert fn.__doc__ == inspect.cleandoc("""Docstring
 
         Parameters
         ----------
@@ -436,5 +397,4 @@ def test_tricky_annotation() -> None:
         Returns
         -------
         None
-        """
-    )
+        """)
